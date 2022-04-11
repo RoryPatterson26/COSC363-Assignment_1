@@ -9,11 +9,7 @@
 #include <GL/freeglut.h>
 #include "RailModels.h"
 
-//--------------- GROUND PLANE ------------------------------------
-// This is a square shaped region on the xz-plane of size 400x400 units
-// centered at the origin.  This region is constructed using small quads
-// of unit size, to facilitate rendering of spotlights
-//-----------------------------------------------------------------
+// Floor plane for the world, made up of single quad.
 void floor()
 {
     float white[4] = {1., 1., 1., 1.};
@@ -23,18 +19,11 @@ void floor()
 
     glMaterialfv(GL_FRONT, GL_SPECULAR, black); //added in lab
 
-    //The floor is made up of several tiny squares on a 400 x 400 grid. Each square has a unit size.
     glBegin(GL_QUADS);
-    for(int i = -200; i < 200; i++)
-    {
-        for(int j = -200;  j < 200; j++)
-        {
-            glVertex3f(i, 0, j);
-            glVertex3f(i, 0, j+1);
-            glVertex3f(i+1, 0, j+1);
-            glVertex3f(i+1, 0, j);
-        }
-    }
+    glVertex3f(-200, 0, -200);
+    glVertex3f(-200, 0, 200);
+    glVertex3f(200, 0, 200);
+    glVertex3f(200, 0, -200);
     glEnd();
     glMaterialfv(GL_FRONT, GL_SPECULAR, white); //added in lab
 }
