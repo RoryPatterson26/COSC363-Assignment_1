@@ -15,10 +15,10 @@ float angle2 = 0;
 float angleChange = 10.5;
 
 // global variable to make it easier to adjust track size
-int trackRadius = 140;
+int trackRadius = 120;
 
 // global variables for camera movement
-float angle=0, look_x, look_z=-1., eye_x, eye_z;
+float angle=0, look_x, look_z=-1., eye_x, eye_y=10, eye_z;
 
 GLuint txId[2];
 
@@ -41,13 +41,17 @@ void special(int key, int x, int y) {
     else if(key == GLUT_KEY_RIGHT) angle += 0.1;
     else if(key == GLUT_KEY_DOWN)
     {  //Move backward
-        eye_x -= 0.1*sin(angle);
-        eye_z += 0.1*cos(angle);
+        eye_x -= 0.8*sin(angle);
+        eye_z += 0.8*cos(angle);
     }
     else if(key == GLUT_KEY_UP)
     { //Move forward
-        eye_x += 0.1*sin(angle);
-        eye_z -= 0.1*cos(angle);
+        eye_x += 0.8*sin(angle);
+        eye_z -= 0.8*cos(angle);
+    } else if(key == GLUT_KEY_PAGE_UP) {
+        eye_y += 1;
+    } else if (key == GLUT_KEY_PAGE_DOWN) {
+        eye_y -= 1;
     }
 
     look_x = eye_x + 100*sin(angle);
@@ -55,8 +59,7 @@ void special(int key, int x, int y) {
     glutPostRedisplay();
 }
 
-void loadTexture()
-{
+void loadTexture() {
     glGenTextures(2, txId);     // Create 2 texture ids
 
     glBindTexture(GL_TEXTURE_2D, txId[0]);  //Use this texture
@@ -104,15 +107,14 @@ void initialize(void) {
 }
 
 void display(void) {
-    float lgt_pos[] = {0.0f, 50.0f, 0.0f, 1.0f};
+    float lgt_pos[] = {0.0f, 100.0f, 0.0f, 1.0f};
 
     glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
     // Camera start position and light position
-    //gluLookAt (-80, 50, 250, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    gluLookAt(eye_x, 10, eye_z,  look_x, 10, look_z,   0, 1, 0);
+    gluLookAt(eye_x, eye_y, eye_z,  look_x, 10, look_z,   0, 1, 0);
     glLightfv(GL_LIGHT0, GL_POSITION, lgt_pos);
 
     // Place the floor in the scene and the tracks
@@ -146,6 +148,35 @@ void display(void) {
         glTranslatef(0.0, 1.0, -(trackRadius));
         wagon();
     glPopMatrix();
+
+    glPushMatrix();
+        glRotatef(-angleChange*2, 0, 1, 0);
+        glScalef(2.0, 1.0, 1.0);
+        glTranslatef(0.0, 1.0, -(trackRadius)-20);
+        station();
+    glPopMatrix();
+
+    glPushMatrix();
+        //glRotatef(-angleChange*2, 0, 1, 0);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        glTranslatef(0., 0., 0.7);
+        glRotatef(-2.4, 0, 1, 0);
+        tunnelEnd();
+    glPopMatrix();
+
+
+    for (int i = 0; i < 60; i += 0.5) {
+        glPushMatrix();
+        glRotatef(i, 0, 1, 0);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        tunnelSlice();
+        glPopMatrix();
+    }
+
 
     glutSwapBuffers();
 }

@@ -152,6 +152,15 @@ void engine()
       glColor4f(1.0, 1.0, 0.0, 1.0);
       glTranslatef(0.0, 4.0, 0.2);
       gluDisk(q, 0.0, 1.0, 20,2);  //headlight!
+
+    glPopMatrix();
+
+    glPushMatrix();
+
+        glColor4f(0.5, 0., 0., 1.0);
+        glTranslatef(-3.0, 7.0, 0.0);
+        glScalef(14, 5, 10);
+        glutSolidCube(1.0);
     glPopMatrix();
 
 }
@@ -170,4 +179,154 @@ void wagon()
       glScalef(18.0, 10.0, 10.0);
       glutSolidCube(1.0);
     glPopMatrix();
+}
+
+void platform() {
+    // Add textures here
+    glColor4f(0.5, 0.5, 0.0, 1.0);
+    glBegin(GL_QUADS);
+        glNormal3f(0., 1., 0.); // Top of platform
+        glVertex3f(-20., 5., 15.);
+        glVertex3f(20., 5., 15.);
+        glVertex3f(20., 5., -15.);
+        glVertex3f(-20., 5., -15.);
+
+        glNormal3f(0., 0., 1.); // Track side of platform
+        glVertex3f(-20., 5., 15.);
+        glVertex3f(-20., 0., 15.);
+        glVertex3f(20., 0., 15.);
+        glVertex3f(20., 5., 15.);
+
+        glNormal3f(1., 0., 0.); // +X side of platform
+        glVertex3f(20., 5., 15.);
+        glVertex3f(20., 0., 15.);
+        glVertex3f(20., 0., -15.);
+        glVertex3f(20., 5., -15.);
+
+        glNormal3f(0., 0., -1.); // Back side of platform
+        glVertex3f(20., 5., -15.);
+        glVertex3f(20., 0., -15.);
+        glVertex3f(-20., 0., -15.);
+        glVertex3f(-20., 5., -15.);
+
+        glNormal3f(-1., 0., 0.); // -X side of platform
+        glVertex3f(-20., 5., -15.);
+        glVertex3f(-20., 0., -15.);
+        glVertex3f(-20., 0., 15.);
+        glVertex3f(-20., 5., 15.);
+    glEnd();
+}
+
+void station() {
+    platform();
+
+    glColor4f(0.5, 0.5, 0.0, 1.0);
+
+    glBegin(GL_QUADS);
+        glNormal3f(0., 0., 1.); // Front side of station
+        glVertex3f(-20., 5., 0.);
+        glVertex3f(20., 5., 0.);
+        glVertex3f(20., 20., 0.);
+        glVertex3f(-20., 20., 0.);
+
+        glNormal3f(1., 0., 0.); // +X side
+        glVertex3f(20., 5., 0.);
+        glVertex3f(20., 5., -15.);
+        glVertex3f(20., 20., -15.);
+        glVertex3f(20., 20., 0.);
+
+        glNormal3f(0., 0., 1.); // Back side
+        glVertex3f(20., 5., -15.);
+        glVertex3f(-20., 5., -15.);
+        glVertex3f(-20., 20., -15.);
+        glVertex3f(20., 20., -15.);
+
+        glNormal3f(-1., 0., 0.); //-X side
+        glVertex3f(-20., 5., -15.);
+        glVertex3f(-20., 5., 0.);
+        glVertex3f(-20., 20., 0.);
+        glVertex3f(-20., 20., -15.);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+        glNormal3f(1., 0., 0.); // +X side
+        glVertex3f(20., 20., 0.);
+        glVertex3f(20., 20., -15.);
+        glVertex3f(20., 25., -7.5);
+
+        glNormal3f(-1., 0., 0.); // -X side
+        glVertex3f(-20., 20., 0.);
+        glVertex3f(-20., 20., -15.);
+        glVertex3f(-20., 25., -7.5);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glNormal3f(0., 2., 3.);
+        glVertex3f(-20., 20., 0.);
+        glVertex3f(20., 20., 0.);
+        glVertex3f(20., 25., -7.5);
+        glVertex3f(-20., 25., -7.5);
+
+        glNormal3f(0., 2., -3.);
+        glVertex3f(20., 20., -15.);
+        glVertex3f(-20., 20., -15.);
+        glVertex3f(-20., 25., -7.5);
+        glVertex3f(20., 25., -7.5);
+    glEnd();
+}
+
+void tunnelEnd() {
+    glBegin(GL_QUADS);
+        glNormal3f(1., 0., 0.); // inner part
+        glVertex3f(-6., 0., 0.);
+        glVertex3f(-5., 0., 0.);
+        glVertex3f(-5., 20., 0.);
+        glVertex3f(-6., 20., 0.);
+
+        glNormal3f(1., 0., 0.); // upper part
+        glVertex3f(-6., 20., 0.);
+        glVertex3f(-6., 19., 0.);
+        glVertex3f(6., 19., 0.);
+        glVertex3f(6., 20., 0.);
+
+        glNormal3f(1., 0., 0.); // outer part
+        glVertex3f(6., 0., 0.);
+        glVertex3f(5., 0., 0.);
+        glVertex3f(5., 20., 0.);
+        glVertex3f(6., 20., 0.);
+        glEnd();
+}
+
+void tunnelSlice() {
+    glBegin(GL_QUADS);
+        glNormal3f(-1., 0., 0.);
+        glVertex3f(-6., 0., 0.5);
+        glVertex3f(-6., 20., 0.5);
+        glVertex3f(-6., 20., -0.5);
+        glVertex3f(-6., 0., -0.5);
+
+        glNormal3f(0., 1., 0.);
+        glVertex3f(-6., 20., -0.5);
+        glVertex3f(-6., 20., 0.5);
+        glVertex3f(6., 20., 1.);
+        glVertex3f(6., 20., -1.);
+
+        glNormal3f(1., 0., 0.);
+        glVertex3f(6., 20., 1.);
+        glVertex3f(6., 0., 1.);
+        glVertex3f(6., 0., -1.);
+        glVertex3f(6., 20., -1.);
+    glEnd();
+}
+
+void tunnel(float trackRadius) {
+    glPushMatrix();
+        glTranslatef(0., 0., 0.7);
+        glRotatef(-2.4, 0, 1, 0);
+        tunnelEnd();
+    glPopMatrix();
+    for (int i = 0; i < 60; i ++) {
+
+        tunnelSlice();
+    }
 }

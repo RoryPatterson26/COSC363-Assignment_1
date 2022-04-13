@@ -7,8 +7,16 @@
 
 void floor();
 
-void tracks(float, float) ; 
+void tracks(float, float) ;
 
 void engine();
 
 void wagon();
+
+void station();
+
+void tunnel(float);
+
+void tunnelSlice();
+
+void tunnelEnd();

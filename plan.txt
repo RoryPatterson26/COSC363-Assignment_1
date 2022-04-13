@@ -1,12 +1,39 @@
-TODO
+IDEA
 1. Add Railway sleepers to the tracks to make them look better
 2. Add texture to the floor to make it look more natural
 3. Design Railway station and find textures for it
 4. Design tunnel section of track
 5. Texture for a skybox
 6. Simple models for Trees around the map
-7. make camera start in a better place and fix movements
 8. Make better model for locomotive as well as textures (wagons and locomotive)
 9. Add animated extra to the scene (barrier arm etc)
 10. Possible camera change
 11. report
+
+
+Requirements:
+1. loop track and Train //DONE\\
+2. railway station //DONE\\ and tunnel
+3. Move continuously on track and stops //DONE\\
+4. Move camera //DONE\\
+
+Extra features
+1. Track enhancements
+2. model enhancements
+3. scene enhancements
+4. extra camera positions
+
+Rendering
+
+Report
+
+
+Plan
+Wed arvo
+Finish building station
+Build tunnel
+
+Wed night
+Texture station train and tunnel
+
+Thurs arvo add extra features and write report.
