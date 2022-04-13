@@ -156,8 +156,17 @@ void display(void) {
         station();
     glPopMatrix();
 
-    glPushMatrix();
-        //glRotatef(-angleChange*2, 0, 1, 0);
+    glPushMatrix(); // other end of tunnel
+        glRotatef(61, 0, 1, 0);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        glTranslatef(0., 0., 0.7);
+        glRotatef(-2.4, 0, 1, 0);
+        tunnelEnd();
+    glPopMatrix();
+
+    glPushMatrix(); // one end of tunnel
         glTranslatef(0.0, 0.0, trackRadius);
         glScalef(1.5, 1, 1.5);
         glRotatef(-90, 0, 1, 0);
@@ -167,7 +176,7 @@ void display(void) {
     glPopMatrix();
 
 
-    for (int i = 0; i < 60; i += 0.5) {
+    for (float i = 0; i < 60.0; i += 0.5) { // tunnel
         glPushMatrix();
         glRotatef(i, 0, 1, 0);
         glTranslatef(0.0, 0.0, trackRadius);
