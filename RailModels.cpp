@@ -17,7 +17,7 @@ void floor()
     glColor4f(0.7, 0.7, 0.7, 1.0);  //The floor is gray in colour
     glNormal3f(0.0, 1.0, 0.0);
 
-    glMaterialfv(GL_FRONT, GL_SPECULAR, black); //added in lab
+    glMaterialfv(GL_FRONT, GL_SPECULAR, black);
 
     glBegin(GL_QUADS);
     glVertex3f(-200, 0, -200);
@@ -25,7 +25,7 @@ void floor()
     glVertex3f(200, 0, 200);
     glVertex3f(200, 0, -200);
     glEnd();
-    glMaterialfv(GL_FRONT, GL_SPECULAR, white); //added in lab
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
 }
 
 //--------------- RAILWAY TRACK ------------------------------------
@@ -33,8 +33,7 @@ void floor()
 // The tracks are modelled using small quadrilateral segments each covering 5 deg arc
 // The tracks have a height of 1 unit (refer to lab notes)
 //-----------------------------------------------------------------
-void tracks(float medRadius, float width)
-{
+void tracks(float medRadius, float width) {
     float inRad  = medRadius - width * 0.5;
     float outRad = medRadius + width * 0.5;
     float angle1,angle2, ca1,sa1, ca2,sa2;
@@ -174,11 +173,45 @@ void wagon()
     base();
 
     glColor4f(0.0, 1.0, 1.0, 1.0);
+    /*
     glPushMatrix();
       glTranslatef(0.0, 10.0, 0.0);
       glScalef(18.0, 10.0, 10.0);
       glutSolidCube(1.0);
     glPopMatrix();
+    */
+    glBegin(GL_QUADS);
+        glNormal3f(0., 1., 0.); // Top of train car
+        glVertex3f(-9., 15., -5);
+        glVertex3f(-9., 15., 5);
+        glVertex3f(9., 15., 5);
+        glVertex3f(9., 15., -5);
+
+        glNormal3f(0., 0., 1.); // +z side
+        glVertex3f(-9., 15., 5);
+        glVertex3f(-9., 5., 5);
+        glVertex3f(9., 5., 5);
+        glVertex3f(9., 15., 5);
+
+        glNormal3f(1., 0., 0.); // back side
+        glVertex3f(9., 15., 5);
+        glVertex3f(9., 5., 5);
+        glVertex3f(9., 5., -5);
+        glVertex3f(9., 15., -5);
+
+        glNormal3f(0., 0., -1.); // -Z side
+        glVertex3f(9., 15., -5);
+        glVertex3f(9., 5., -5);
+        glVertex3f(-9., 5., -5);
+        glVertex3f(-9., 15., -5);
+
+        glNormal3f(-1., 0., 0.); // Front side 
+        glVertex3f(-9., 15., -5.);
+        glVertex3f(-9., 5., -5.);
+        glVertex3f(-9., 5., 5.);
+        glVertex3f(-9., 15., 5.);
+
+    glEnd();
 }
 
 void platform() {
