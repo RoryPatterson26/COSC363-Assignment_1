@@ -10,10 +10,12 @@ IDEA
 10. Possible camera change
 11. report
 
+12. fix tunnel
+
 
 Requirements:
 1. loop track and Train //DONE\\
-2. railway station //DONE\\ and tunnel
+2. railway station and tunnel //DONE\\
 3. Move continuously on track and stops //DONE\\
 4. Move camera //DONE\\
 

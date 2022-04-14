@@ -20,7 +20,7 @@ int trackRadius = 120;
 // global variables for camera movement
 float angle=0, look_x, look_z=-1., eye_x, eye_y=10, eye_z;
 
-GLuint txId[2];
+GLuint txId[3];
 
 
 // Timer for animation
@@ -60,7 +60,7 @@ void special(int key, int x, int y) {
 }
 
 void loadTexture() {
-    glGenTextures(2, txId);     // Create 2 texture ids
+    glGenTextures(3, txId);     // Create 2 texture ids
 
     glBindTexture(GL_TEXTURE_2D, txId[0]);  //Use this texture
     loadTGA("roof.tga");
@@ -68,12 +68,17 @@ void loadTexture() {
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
     glBindTexture(GL_TEXTURE_2D, txId[1]);  //Use this texture
-    loadTGA("Floor.tga");
+    loadTGA("WagonTexture.tga");
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); //Set texture parameters
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+    glBindTexture(GL_TEXTURE_2D, txId[2]);  //Use this texture
+    loadTGA("brick2.tga");
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); //Set texture parameters
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
 
-    glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
 
@@ -356,26 +361,22 @@ void wagon()
 {
     base();
 
-    glColor4f(0.0, 1.0, 1.0, 1.0);
-    /*
-    glPushMatrix();
-      glTranslatef(0.0, 10.0, 0.0);
-      glScalef(18.0, 10.0, 10.0);
-      glutSolidCube(1.0);
-    glPopMatrix();
-    */
+    glColor4f(0.1, 0.1, 0.1, 1.0);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, txId[1]);
+
     glBegin(GL_QUADS);
         glNormal3f(0., 1., 0.); // Top of train car
-        glVertex3f(-9., 15., -5);
-        glVertex3f(-9., 15., 5);
-        glVertex3f(9., 15., 5);
-        glVertex3f(9., 15., -5);
+        glTexCoord2f(0., 0.55); glVertex3f(-9., 15., -5);
+        glTexCoord2f(0., 0.18); glVertex3f(-9., 15., 5);
+        glTexCoord2f(1., 0.18); glVertex3f(9., 15., 5);
+        glTexCoord2f(1., 0.55); glVertex3f(9., 15., -5);
 
         glNormal3f(0., 0., 1.); // +z side
-        glVertex3f(-9., 15., 5);
-        glVertex3f(-9., 5., 5);
-        glVertex3f(9., 5., 5);
-        glVertex3f(9., 15., 5);
+        glTexCoord2f(0, 0.67); glVertex3f(-9., 15., 5);
+        glTexCoord2f(0, 1); glVertex3f(-9., 5., 5);
+        glTexCoord2f(0.4, 1); glVertex3f(9., 5., 5);
+        glTexCoord2f(0.4, 0.67); glVertex3f(9., 15., 5);
 
         glNormal3f(1., 0., 0.); // back side
         glVertex3f(9., 15., 5);
@@ -384,10 +385,10 @@ void wagon()
         glVertex3f(9., 15., -5);
 
         glNormal3f(0., 0., -1.); // -Z side
-        glVertex3f(9., 15., -5);
-        glVertex3f(9., 5., -5);
-        glVertex3f(-9., 5., -5);
-        glVertex3f(-9., 15., -5);
+        glTexCoord2f(0, 0.67); glVertex3f(9., 15., -5);
+        glTexCoord2f(0, 1); glVertex3f(9., 5., -5);
+        glTexCoord2f(0.4, 1); glVertex3f(-9., 5., -5);
+        glTexCoord2f(0.4, 0.67); glVertex3f(-9., 15., -5);
 
         glNormal3f(-1., 0., 0.); // Front side
         glVertex3f(-9., 15., -5.);
@@ -396,6 +397,7 @@ void wagon()
         glVertex3f(-9., 15., 5.);
 
     glEnd();
+    glDisable(GL_TEXTURE_2D);
 }
 
 void platform() {
@@ -403,7 +405,7 @@ void platform() {
     glColor4f(0.5, 0.5, 0.5, 1.0);
 
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, txId[1]);
+    glBindTexture(GL_TEXTURE_2D, txId[2]);
 
     glBegin(GL_QUADS);
         glNormal3f(0., 1., 0.); // Top of platform
@@ -444,7 +446,7 @@ void station() {
 
     glColor4f(0.5, 0.5, 0.0, 1.0);
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, txId[1]);
+    glBindTexture(GL_TEXTURE_2D, txId[2]);
 
     glBegin(GL_QUADS);
         glNormal3f(0., 0., 1.); // Front side of station
