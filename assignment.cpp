@@ -2,6 +2,8 @@
 // COSC363 Assignment 1 (2022)
 // Main file for Railway Assignment
 // Author: Rory Patterson
+// BUILD COMMAND: g++ -o RailwayWorld assignment.cpp -lGL -lGLU -lglut
+// RUN COMMAND: ./RalwayWorld
 // =============================================================================
 #include <iostream>
 #include <cmath>
