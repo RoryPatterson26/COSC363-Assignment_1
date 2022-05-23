@@ -3,13 +3,12 @@
 // Main file for Railway Assignment
 // Author: Rory Patterson
 // BUILD COMMAND: g++ -o RailwayWorld assignment.cpp -lGL -lGLU -lglut
-// RUN COMMAND: ./RalwayWorld
+// RUN COMMAND: ./RailwayWorld
 // =============================================================================
 #include <iostream>
 #include <cmath>
 #include <math.h>
 #include <GL/freeglut.h>
-#include "RailModels.h"
 #include "loadTGA.h"
 
 // Global variables for changing the angle of the train so it can be animated
@@ -114,92 +113,6 @@ void initialize(void) {
     gluPerspective(60., 1.0, 10.0, 1000.0);
 }
 
-void display(void) {
-    float lgt_pos[] = {0.0f, 100.0f, 0.0f, 1.0f};
-
-    glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // Camera start position and light position
-    gluLookAt(eye_x, eye_y, eye_z,  look_x, 10, look_z,   0, 1, 0);
-    glLightfv(GL_LIGHT0, GL_POSITION, lgt_pos);
-
-    // Place the floor in the scene and the tracks
-    floor();
-    tracks(trackRadius, 10);
-
-    // Place locomotive for train
-    glPushMatrix();
-        glRotatef(angle2, 0, 1, 0);
-        glTranslatef(0.0, 1.0, -(trackRadius));
-        engine();
-    glPopMatrix();
-
-    // Place first wagon for train
-    glPushMatrix();
-        glRotatef(angle2-angleChange*1, 0, 1, 0);
-        glTranslatef(0.0, 1.0, -(trackRadius));
-        wagon();
-    glPopMatrix();
-
-    // Place second wagon for train
-    glPushMatrix();
-        glRotatef(angle2-angleChange*2, 0, 1, 0);
-        glTranslatef(0.0, 1.0, -(trackRadius));
-        wagon();
-    glPopMatrix();
-
-    // Place third wagon for train
-    glPushMatrix();
-        glRotatef(angle2-angleChange*3, 0, 1, 0);
-        glTranslatef(0.0, 1.0, -(trackRadius));
-        wagon();
-    glPopMatrix();
-
-    glPushMatrix();
-        glRotatef(-angleChange*2, 0, 1, 0);
-        glScalef(2.0, 1.0, 1.0);
-        glTranslatef(0.0, 1.0, -(trackRadius)-20);
-        station();
-    glPopMatrix();
-
-    glPushMatrix(); // other end of tunnel
-        glColor4f(0.5, 0.5, 0.5, 0.5);
-        glRotatef(60.5, 0, 1, 0);
-        glTranslatef(0.0, 0.0, trackRadius);
-        glScalef(1.5, 1, 1.5);
-        glRotatef(-90, 0, 1, 0);
-        glTranslatef(0., 0., 0.7);
-        glRotatef(2.4, 0, 1, 0);
-        tunnelEnd();
-    glPopMatrix();
-
-    glPushMatrix(); // one end of tunnel
-        glColor4f(0.5, 0.5, 0.5, 0.5);
-        glTranslatef(0.0, 0.0, trackRadius);
-        glScalef(1.5, 1, 1.5);
-        glRotatef(-90, 0, 1, 0);
-        glTranslatef(0., 0., 0.7);
-        glRotatef(-2.4, 0, 1, 0);
-        tunnelEnd();
-    glPopMatrix();
-
-
-    for (float i = 0; i < 60.0; i += 0.5) { // tunnel
-        glPushMatrix();
-        glColor4f(0.5, 0.5, 0.5, 0.5);
-        glRotatef(i, 0, 1, 0);
-        glTranslatef(0.0, 0.0, trackRadius);
-        glScalef(1.5, 1, 1.5);
-        glRotatef(-90, 0, 1, 0);
-        tunnelSlice();
-        glPopMatrix();
-    }
-
-
-    glutSwapBuffers();
-}
 // Floor plane for the world, made up of single quad.
 void floor()
 {
@@ -563,6 +476,94 @@ void tunnel(float trackRadius) {
 
         tunnelSlice();
     }
+}
+
+
+void display(void) {
+    float lgt_pos[] = {0.0f, 100.0f, 0.0f, 1.0f};
+
+    glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    // Camera start position and light position
+    gluLookAt(eye_x, eye_y, eye_z,  look_x, 10, look_z,   0, 1, 0);
+    glLightfv(GL_LIGHT0, GL_POSITION, lgt_pos);
+
+    // Place the floor in the scene and the tracks
+    floor();
+    tracks(trackRadius, 10);
+
+    // Place locomotive for train
+    glPushMatrix();
+        glRotatef(angle2, 0, 1, 0);
+        glTranslatef(0.0, 1.0, -(trackRadius));
+        engine();
+    glPopMatrix();
+
+    // Place first wagon for train
+    glPushMatrix();
+        glRotatef(angle2-angleChange*1, 0, 1, 0);
+        glTranslatef(0.0, 1.0, -(trackRadius));
+        wagon();
+    glPopMatrix();
+
+    // Place second wagon for train
+    glPushMatrix();
+        glRotatef(angle2-angleChange*2, 0, 1, 0);
+        glTranslatef(0.0, 1.0, -(trackRadius));
+        wagon();
+    glPopMatrix();
+
+    // Place third wagon for train
+    glPushMatrix();
+        glRotatef(angle2-angleChange*3, 0, 1, 0);
+        glTranslatef(0.0, 1.0, -(trackRadius));
+        wagon();
+    glPopMatrix();
+
+    glPushMatrix();
+        glRotatef(-angleChange*2, 0, 1, 0);
+        glScalef(2.0, 1.0, 1.0);
+        glTranslatef(0.0, 1.0, -(trackRadius)-20);
+        station();
+    glPopMatrix();
+
+    glPushMatrix(); // other end of tunnel
+        glColor4f(0.5, 0.5, 0.5, 0.5);
+        glRotatef(60.5, 0, 1, 0);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        glTranslatef(0., 0., 0.7);
+        glRotatef(2.4, 0, 1, 0);
+        tunnelEnd();
+    glPopMatrix();
+
+    glPushMatrix(); // one end of tunnel
+        glColor4f(0.5, 0.5, 0.5, 0.5);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        glTranslatef(0., 0., 0.7);
+        glRotatef(-2.4, 0, 1, 0);
+        tunnelEnd();
+    glPopMatrix();
+
+
+    for (float i = 0; i < 60.0; i += 0.5) { // tunnel
+        glPushMatrix();
+        glColor4f(0.5, 0.5, 0.5, 0.5);
+        glRotatef(i, 0, 1, 0);
+        glTranslatef(0.0, 0.0, trackRadius);
+        glScalef(1.5, 1, 1.5);
+        glRotatef(-90, 0, 1, 0);
+        tunnelSlice();
+        glPopMatrix();
+    }
+
+
+    glutSwapBuffers();
 }
 
 
